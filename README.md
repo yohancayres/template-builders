@@ -100,6 +100,12 @@ If you would like to build from retail media, you will need to supply the ISO im
 ./packer build -only=qemu.server-2022-standard-eval windows-server.pkr.hcl
 ```
 
+#### Windows 10
+
+```shell
+./packer build -only=qemu.windows-10 windows-server.pkr.hcl
+```
+
 ## Useful Windows Commands
 
 ### Remove Windows updates polices
