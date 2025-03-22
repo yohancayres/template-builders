@@ -227,7 +227,7 @@ source "qemu" "windows-server-2012-eval" {
   output_directory = "${var.output_dir}/windows-server-2012-eval"
   qemuargs         = [
     ["-m", "${var.windows_memory}M"], ["-smp", var.windows_cpus],
-    ["-drive", "file=${var.windows_iso_10},media=cdrom,index=2"],
+    ["-drive", "file=${var.windows_iso_2012},media=cdrom,index=2"],
     ["-drive", "file=${var.windows_virtio_driver},media=cdrom,index=3"], [
       "-drive",
       "file=${var.output_dir}/windows-server-2012-eval/windows-server-2012-eval.qcow2,if=virtio,cache=writeback,discard=ignore,format=qcow2,index=1"
@@ -238,8 +238,8 @@ source "qemu" "windows-server-2012-eval" {
   disk_cache       = var.qemu_disk_cache
   accelerator      = var.accelerator
   headless         = var.headless
-  iso_checksum     = var.windows_iso_10_checksum
-  iso_urls         = [var.windows_iso_10]
+  iso_checksum     = var.windows_iso_2012_checksum
+  iso_urls         = [var.windows_iso_2012]
   shutdown_timeout = var.shutdown_timeout
   format           = var.qemu_format
   vnc_bind_address = var.vnc_bind_address
