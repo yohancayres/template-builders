@@ -1,5 +1,12 @@
 mkdir -p ./source
 
+if [ -f "./source/windows-server-2012-eval.iso" ]; then
+    echo "windows-server-2012-eval.iso already exists. Skipping..."
+else
+   echo "Downloading windows-server-2012-eval.iso..."
+   curl https://download.microsoft.com/download/6/2/A/62A76ABB-9990-4EFC-A4FE-C7D698DAEB96/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_SERVER_EVAL_EN-US-IR3_SSS_X64FREE_EN-US_DV9.ISO -o ./source/windows-server-2012-eval.iso -L -#
+ fi
+
 if [ -f "./source/windows-server-2022-eval.iso" ]; then
     echo "windows-server-2022-eval.iso already exists. Skipping..."
 else

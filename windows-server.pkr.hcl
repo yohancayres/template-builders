@@ -26,6 +26,8 @@ variables {
   windows_iso_2022_eval_checksum = "sha256:4f1457c4fe14ce48c9b2324924f33ca4f0470475e6da851b39ccbf98f44e7852"
   windows_iso_10                 = "./source/w10-pt-BR.iso"
   windows_iso_10_checksum        = "sha256:0c6d2d867f08e9262328196b6f1dada5114728a790d464d4da87c20b3a0a7dcb"
+  windows_iso_2012               = "./source/windows-server-2012-eval.iso"
+  windows_iso_2012_checksum      = "sha256:6612b5b1f53e845aacdf96e974bb119a3d9b4dcb5b82e65804ab7e534dc7b4d5"
   qemu_disk_cache                = "writeback"
   qemu_format                    = "qcow2"
 }
@@ -213,12 +215,50 @@ source "qemu" "windows-10" {
   winrm_username   = var.windows_user
 }
 
+
+source "qemu" "windows-server-2012-eval" {
+  disk_size    = "18000"
+  communicator = "winrm"
+  floppy_files = [
+    "./config/windows-shared/scripts/*",
+    "./config/windows-server-2012-eval/files/*",
+    "./config/windows-shared/patches/cloudinit/windows.py"
+  ]
+  output_directory = "${var.output_dir}/windows-server-2012-eval"
+  qemuargs         = [
+    ["-m", "${var.windows_memory}M"], ["-smp", var.windows_cpus],
+    ["-drive", "file=${var.windows_iso_10},media=cdrom,index=2"],
+    ["-drive", "file=${var.windows_virtio_driver},media=cdrom,index=3"], [
+      "-drive",
+      "file=${var.output_dir}/windows-server-2012-eval/windows-server-2012-eval.qcow2,if=virtio,cache=writeback,discard=ignore,format=qcow2,index=1"
+    ]
+  ]
+  shutdown_command = "a:/sysprep.bat"
+  vm_name          = "windows-server-2012-eval.qcow2"
+  disk_cache       = var.qemu_disk_cache
+  accelerator      = var.accelerator
+  headless         = var.headless
+  iso_checksum     = var.windows_iso_10_checksum
+  iso_urls         = [var.windows_iso_10]
+  shutdown_timeout = var.shutdown_timeout
+  format           = var.qemu_format
+  vnc_bind_address = var.vnc_bind_address
+  vnc_port_min     = var.vnc_port_min
+  vnc_port_max     = var.vnc_port_max
+  winrm_insecure   = var.winrm_insecure
+  winrm_password   = var.windows_password
+  winrm_timeout    = var.winrm_timeout
+  winrm_use_ssl    = var.winrm_use_ssl
+  winrm_username   = var.windows_user
+}
+
 build {
   sources = [
     "source.qemu.server-2019-standard",
     "source.qemu.server-2019-standard-eval",
     "source.qemu.server-2022-standard",
     "source.qemu.server-2022-standard-eval",
+    "source.qemu.windows-server-2012-eval",
     "source.qemu.windows-10"
   ]
 
@@ -230,6 +270,7 @@ build {
     only             = [
       "qemu.server-2019-standard",
       "qemu.server-2019-standard-eval",
+      "qemu.windows-server-2012-eval",
       "qemu.windows-10"
     ]
   }
@@ -247,6 +288,7 @@ build {
     only   = [
       "qemu.server-2019-standard",
       "qemu.server-2019-standard-eval",
+      "qemu.windows-server-2012-eval",
       "qemu.windows-10"
     ]
   }
