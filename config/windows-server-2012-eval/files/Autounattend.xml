@@ -4,10 +4,10 @@
         <component name="Microsoft-Windows-PnpCustomizationsWinPE" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
             <DriverPaths>
                 <PathAndCredentials wcm:action="add" wcm:keyValue="1">
-                    <Path>E:\NetKVM\2k12R2\amd64\</Path>
+                    <Path>E:\NetKVM\2k12\amd64\</Path>
                 </PathAndCredentials>
                 <PathAndCredentials wcm:action="add" wcm:keyValue="3">
-                    <Path>E:\viostor\2k12R2\amd64\</Path>
+                    <Path>E:\viostor\2k12\amd64\</Path>
                 </PathAndCredentials>
             </DriverPaths>
         </component>
@@ -46,7 +46,7 @@
                         </ModifyPartition>
                         <ModifyPartition wcm:action="add">
                             <Format>NTFS</Format>
-                            <Label>Windows 10</Label>
+                            <Label>Windows Server</Label>
                             <Letter>C</Letter>
                             <Order>2</Order>
                             <PartitionID>2</PartitionID>
@@ -61,7 +61,7 @@
                     <InstallFrom>
                         <MetaData wcm:action="add">
                             <Key>/IMAGE/NAME</Key>
-                            <Value>Windows Server 2012 R2 Standard Evaluation (Server with a GUI)</Value>
+                            <Value>Windows Server 2012 SERVERSTANDARD EVALUATION</Value>    
                         </MetaData>
                     </InstallFrom>
                     <InstallTo>
@@ -71,11 +71,8 @@
                 </OSImage>
             </ImageInstall>
             <UserData>
-                <!-- Product Key from https://www.microsoft.com/de-de/evalcenter/evaluate-windows-server-technical-preview?i=1 -->
                 <ProductKey>
-                    <!-- Do not uncomment the Key element if you are using trial ISOs -->
-                    <!-- You must uncomment the Key element (and optionally insert your own key) if you are using retail or volume license ISOs -->
-                    <!-- <Key>6XBNX-4JQGW-QX6QG-74P76-72V67</Key> -->
+                   <Key></Key>
                     <WillShowUI>OnError</WillShowUI>
                 </ProductKey>
                 <AcceptEula>true</AcceptEula>
@@ -89,7 +86,7 @@
             <OEMInformation>
                 <HelpCustomized>false</HelpCustomized>
             </OEMInformation>
-            <ComputerName>server-server</ComputerName>
+            <ComputerName>win2012-eval</ComputerName>
             <TimeZone>Pacific Standard Time</TimeZone>
             <RegisteredOwner/>
         </component>
@@ -185,27 +182,6 @@
                     <Order>9</Order>
                     <Description>Disable Hibernation Mode</Description>
                 </SynchronousCommand>
-                <!-- WITH WINDOWS UPDATES -->
-                <!--
-                <SynchronousCommand wcm:action="add">
-                    <CommandLine>cmd.exe /c a:\microsoft-updates.bat</CommandLine>
-                    <Order>98</Order>
-                    <Description>Enable Microsoft Updates</Description>
-                </SynchronousCommand>
-                <SynchronousCommand wcm:action="add">
-                    <CommandLine>cmd.exe /c C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -File a:\disable-screensaver.ps1</CommandLine>
-                    <Description>Disable Screensaver</Description>
-                    <Order>99</Order>
-                    <RequiresUserInput>true</RequiresUserInput>
-                </SynchronousCommand>
-                <SynchronousCommand wcm:action="add">
-                    <CommandLine>cmd.exe /c C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -File a:\win-updates.ps1</CommandLine>
-                    <Description>Install Windows Updates</Description>
-                    <Order>100</Order>
-                    <RequiresUserInput>true</RequiresUserInput>
-                </SynchronousCommand>
-                -->
-                <!-- END WITH WINDOWS UPDATES -->
                 <!-- WITHOUT WINDOWS UPDATES -->
                 <SynchronousCommand wcm:action="add">
                     <CommandLine>cmd.exe /c a:\winrmConfig.bat</CommandLine>
@@ -224,11 +200,6 @@
                     <Description>Fix public network</Description>
                     <Order>13</Order>
                     <RequiresUserInput>true</RequiresUserInput>
-                </SynchronousCommand>
-                <SynchronousCommand wcm:action="add">
-                    <CommandLine>C:\Windows\SysWOW64\cmd.exe /c powershell -Command "Install-Language pt-BR -CopyToSettings -ExcludeFeatures"</CommandLine>
-                    <Description>Install pt-BR Language</Description>
-                    <Order>14</Order>
                 </SynchronousCommand>
                 <!-- END WITHOUT WINDOWS UPDATES -->
             </FirstLogonCommands>
@@ -270,5 +241,5 @@
             <EnableLUA>false</EnableLUA>
         </component>
     </settings>
-    <cpi:offlineImage cpi:source="wim:c:/wim/install.wim#Windows 10 ENTERPRISE EVALUATION" xmlns:cpi="urn:schemas-microsoft-com:cpi" />
+    <cpi:offlineImage cpi:source="wim:c:/wim/install.wim#Windows Server 2012 SERVERSTANDARD EVALUATION" xmlns:cpi="urn:schemas-microsoft-com:cpi" />
 </unattend>
